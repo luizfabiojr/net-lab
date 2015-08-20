@@ -14,6 +14,11 @@ DECLARE @vAliquotaIcms decimal(18,5)
 DECLARE @vValorIcms decimal(18,5)
 DECLARE @vNomeProduto varchar(50)
 DECLARE @vCodigoProduto varchar(20)
+DECLARE @vBaseIpi decimal(18,5)
+DECLARE @vAliquotaIpi decimal(18,5)
+DECLARE @vValorIpi decimal(18,5)
+DECLARE @vDesconto decimal(18,5)
+
 
 WHILE (@vCount <= 1000) 
 BEGIN
@@ -52,6 +57,19 @@ BEGIN
 	SET @vBaseIcms = 100.00
 	SET @vAliquotaIcms = 10
 	SET @vValorIcms = 10
+	SET @vBaseIpi = 200.00
+	SET @vAliquotaIpi = 0.1
+	SET @vValorIpi = 20
+
+	IF @vEstadoDestino = 'SP'
+	BEGIN
+		SET @vDesconto = 0.1
+	END
+	ELSE
+	BEGIN
+		SET @vDesconto = 0	
+	END
+
 	SET @vNomeProduto = 'PRODUTO DE CARGA'
 	SET @vCodigoProduto = '123-5548-555-22'
 
@@ -64,7 +82,11 @@ BEGIN
 		@pAliquotaIcms = @vAliquotaIcms,
 		@pValorIcms = @vValorIcms,
 		@pNomeProduto = @vNomeProduto,
-		@pCodigoProduto = @vCodigoProduto
+		@pCodigoProduto = @vCodigoProduto,
+		@pBaseIpi = @vBaseIpi,
+		@pAliquotaIpi = @vAliquotaIpi,
+		@pValorIpi = @vValorIpi,
+		@pDesconto = @vDesconto
 
 	SET @vCount = @vCount + 1
 END
